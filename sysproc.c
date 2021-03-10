@@ -27,6 +27,36 @@ sys_wait(void)
 }
 
 int
+sys_waitx(void)
+{
+  int *wtime, *rtime;
+  if(argptr(0, (char **)&wtime, sizeof(int)) < 0)
+	  return -1;
+  if(argptr(1, (char **)&rtime, sizeof(int)) < 0)
+	  return -1;
+  int ret = waitx(wtime, rtime);
+  return ret;
+}
+
+int
+sys_procdets(void)
+{
+  procdets();
+  return 0;
+}
+
+int
+sys_set_priority(void)
+{
+  int pid, new_priority;
+  if(argint(0, &new_priority) < 0)
+    return -1;
+  if(argint(1, &pid) < 0)
+    return -1;
+  return set_priority(new_priority, pid);
+}
+
+int
 sys_kill(void)
 {
   int pid;
